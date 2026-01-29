@@ -4,27 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vídeo</title>
+
   <style>
-    body {
+    * {
       margin: 0;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body {
+      background: #000;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
     video {
       width: 100%;
-      max-width: 420px;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .tap {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
 
-<video controls playsinline webkit-playsinline preload="metadata">
+<video id="video" autoplay muted loop playsinline preload="auto">
   <source src="v1deo.mp4" type="video/mp4">
-  Seu navegador não suporta vídeo.
 </video>
+
+<div class="tap">🔊 Toque para ativar o som</div>
+
+<script>
+  const video = document.getElementById('video');
+  const tap = document.querySelector('.tap');
+
+  function ativarSom() {
+    video.muted = false;
+    video.play();
+    tap.style.display = 'none';
+    document.removeEventListener('click', ativarSom);
+  }
+
+  document.addEventListener('click', ativarSom);
+</script>
+
+</body>
+</html>
 
 
